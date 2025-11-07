@@ -9,7 +9,7 @@
     position: absolute;
     width: 100%; height: 100%;
     overflow: hidden;
-    background-color: $theme-index-white;
+    background-color: $theme-chisato-cream;
     background-image: url("/images/index/diandian.svg");
     background-size: 30px;
     opacity: 0;
@@ -23,20 +23,27 @@
         left: 0; top: 50vmin;
         transform-origin: left;
         transform: rotate(-30deg);
-        border-top: 3px dashed $theme-index-black;
+        border-top: 3px dashed $theme-chisato-red;
     }
     span:nth-child(2) {
         left: 50vmin; top: 0;
         transform-origin: left;
         transform: rotate(120deg);
-        border-top: 3px dashed $theme-index-black;
+        border-top: 3px dashed $theme-chisato-purple;
     }
     span:nth-child(3) {
         right: 25vmin; bottom: 0;
         transform-origin: right;
         transform: rotate(105deg);
-        border-top: 3px dashed $theme-index-black;
+        border-top: 3px dashed $theme-chisato-red;
     }
+}
+/**
+ * Chisato GIF 容器
+ * 已移至 Profile 页面，此处隐藏
+ */
+.index-chisato {
+    display: none; // 已移至 Profile 页面
 }
 .index-logo {
     position: absolute;
@@ -47,6 +54,7 @@
     background-repeat: no-repeat;
     background-position: center;
     transform: scale(0);
+    z-index: 10;
 }
 #index-button {
     position: absolute;
@@ -71,7 +79,8 @@
     // main
     .btn-main {
         background-color: $theme-index-black;
-        &:hover { background-color: $theme-index-green; }
+        // 使用 Chisato 主题色作为 hover 效果，与整体主题更协调
+        &:hover { background-color: $theme-chisato-red; }
         transition: background-color .4s ease;
         .short-id {
             position: absolute;
@@ -97,7 +106,7 @@
     }
 }
 #index-button[data-state="close"], #index-button[data-state="init"] {
-    .btn-main { &:hover { background-color: $theme-index-green; } }
+    .btn-main { &:hover { background-color: $theme-chisato-red; } }
     .btn-main .short-id-2 span {
         &:nth-child(1) { opacity: 1; }
         &:nth-child(2) { transform: translateY(-2vmin); }
@@ -105,7 +114,7 @@
     }
 }
 #index-button[data-state="open"] {
-    .btn-main { &:hover { background-color: $theme-index-red; } }
+    .btn-main { &:hover { background-color: $theme-chisato-purple; } }
     .btn-main .short-id-2 span {
         &:nth-child(1) { opacity: 0; }
         &:nth-child(2) { transform: rotate(45deg) translateY(0); }
@@ -140,7 +149,8 @@
         line-height: 52px;
         box-shadow: rgba(0,0,0,.3) 0 0 15px;
         transform: scale(0);
-        &:hover { background-color: $theme-index-blue; }
+        // 社交链接 hover 效果使用 Chisato 主题色
+        &:hover { background-color: $theme-chisato-purple; }
         transition: background-color .4s ease;
     }
 }
@@ -149,6 +159,7 @@
  * Animations
  */
 .index-bg { animation: fadein .6s ease forwards; }
+// Chisato GIF 动画已移至 Profile 页面
 .index-logo { animation: scale-in .6s ease .2s forwards; }
 #index-button {
     animation: scale-in .6s ease forwards;

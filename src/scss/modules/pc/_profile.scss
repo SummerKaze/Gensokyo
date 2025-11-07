@@ -23,8 +23,9 @@
     position: absolute;
     width: 100%; height: 100%;
     left: 0; top: 0;
-    background-image: url("/images/profile/background.svg");
-    background-size: 40px;
+    // 移除背景图片，使用 Chisato GIF 作为背景
+    // background-image: url("/images/profile/background.svg");
+    // background-size: 40px;
     color: $theme-index-black;
     overflow-y: auto;
     overflow-x: hidden;
@@ -35,6 +36,106 @@
 }
 #profile-page[data-state="open"] { display: block; }
 #profile-page[data-state="close"], #profile-page[data-state="init"] { display: none; }
+
+/**
+ * Chisato GIF 全屏背景
+ * 在 About Me 部分展示锦木千束与彼岸花
+ * 使用主题色遮罩增强视觉效果
+ */
+.description-box {
+    position: relative;
+    height: auto; // 根据内容动态调整高度
+    min-height: 0; // 不强制最小高度
+    padding: 0; // 去掉 padding，让内部元素自己控制间距
+    // 确保子元素居中
+    text-align: center;
+    
+    .profile-chisato-bg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: -1;
+        overflow: hidden;
+        
+        .chisato-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            // 苹果 Glass 玻璃效果
+            // 使用多层渐变和模糊效果创造深度感
+            background: 
+                // 顶部高光
+                linear-gradient(
+                    to bottom,
+                    rgba(255, 255, 255, 0.08) 0%,
+                    transparent 15%
+                ),
+                // 底部阴影
+                linear-gradient(
+                    to top,
+                    rgba($theme-chisato-red, 0.2) 0%,
+                    rgba($theme-chisato-purple, 0.15) 30%,
+                    transparent 60%
+                ),
+                // 中心渐变 - 40% 半透明
+                radial-gradient(
+                    ellipse at center,
+                    rgba($theme-chisato-cream, 0.4) 0%,
+                    rgba($theme-chisato-purple, 0.3) 40%,
+                    rgba($theme-chisato-red, 0.4) 100%
+                );
+            // Glass 效果的关键：backdrop-filter - 降低模糊度
+            backdrop-filter: blur(20px) saturate(150%);
+            -webkit-backdrop-filter: blur(20px) saturate(150%);
+            // 添加微妙的边框高光
+            box-shadow: 
+                inset 0 1px 0 rgba(255, 255, 255, 0.15),
+                inset 0 -1px 0 rgba(0, 0, 0, 0.08);
+        }
+        
+        .chisato-gif {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            // 使用 GPU 加速，合并 transform 属性
+            transform: translate(-50%, -50%) translateZ(0);
+            width: 100vw;
+            height: 100vh;
+            object-fit: cover;
+            object-position: center;
+            // 使用主题色创建氛围光效
+            filter: 
+                brightness(0.9)
+                contrast(1.1)
+                drop-shadow(0 0 60px rgba($theme-chisato-red, 0.4))
+                drop-shadow(0 0 30px rgba($theme-chisato-purple, 0.3));
+            z-index: 1;
+            opacity: 0;
+            // 优化性能：使用 will-change 加速渲染
+            will-change: opacity, transform;
+            // 延迟加载时的淡入动画
+            transition: opacity 0.8s ease;
+            animation: chisato-fade-in-profile 1.5s ease 0.3s forwards;
+            // 优化 GIF 渲染质量
+            image-rendering: auto;
+            // 使用 CSS 滤镜平滑 GIF 循环跳转
+            // 注意：GIF 本身的循环问题最好通过重新制作 GIF 或使用视频格式解决
+        }
+    }
+    
+    // 确保内容显示在 GIF 上方
+    .avatar,
+    .author,
+    .description {
+        position: relative;
+        z-index: 10;
+    }
+}
 .header {
     position: relative;
     width: 100%; height: 12.5vmin;
@@ -43,7 +144,8 @@
     background-size: 52vmin;
     background-position: center;
     background-repeat: no-repeat;
-    margin-top: 9vmin;
+    margin-top: 0; // 去掉顶部留白，与其他 section 保持一致
+    z-index: 10;
 }
 .avatar {
     position: relative;
@@ -51,27 +153,71 @@
     width: 120px; height: 120px;
     border: 4px solid $theme-index-black;
     border-radius: 50%;
-    background-image: url("https://cdn.jsdelivr.net/npm/cyris/images/avatar.png");
-    background-size: 120px;
-    margin-top: 8vmin;
+    // 使用网络动态头像
+    background-image: url("https://avatars.githubusercontent.com/u/50443080");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin-top: 0; // 去掉顶部留白，与其他 section 保持一致
+    // 添加阴影，使其在 GIF 背景上更突出
+    box-shadow: 
+        0 0 20px rgba($theme-chisato-red, 0.3),
+        0 0 10px rgba($theme-chisato-purple, 0.2),
+        0 4px 15px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    
+    &:hover {
+        transform: scale(1.05);
+        box-shadow: 
+            0 0 30px rgba($theme-chisato-red, 0.5),
+            0 0 15px rgba($theme-chisato-purple, 0.3),
+            0 6px 20px rgba(0, 0, 0, 0.3);
+    }
+    
+    .avatar-link {
+        display: block;
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+    }
 }
 .author {
     position: relative;
-    width: 19vmin; height: 5vmin;
-    background-color: #fff;
+    display: inline-block; // 改为 inline-block，让宽度根据内容自适应
+    height: 5vmin;
+    padding: 0 1.5vmin 0 3vmin; // 通过 padding 设置内边距，让宽度自适应文字内容
+    background-color: rgba(255, 255, 255, 0.95);
     line-height: 5vmin;
-    box-shadow: 0 0 5px $theme-index-black;
-    margin: 0 auto;
+    box-shadow: 
+        0 0 15px rgba($theme-chisato-red, 0.2),
+        0 0 8px rgba($theme-chisato-purple, 0.15),
+        0 0 5px $theme-index-black;
+    margin: 2vmin auto 0; // 与 avatar 保持适当间距，保持居中
     font-size: 23px;
     font-weight: bolder;
     letter-spacing: 2px;
-    margin-top: -1vmin;
     transform: rotate(-3deg);
+    backdrop-filter: blur(5px);
     &::before {
         position: absolute; content: "";
         width: 1.8vmin; height: 100%;
-        background-color: $theme-index-black;
+        background-color: $theme-chisato-red;
         left: 0; top: 0;
+    }
+    
+    .author-link {
+        display: block;
+        width: 100%;
+        height: 100%;
+        color: $theme-index-black;
+        text-decoration: none;
+        transition: color 0.3s ease;
+        white-space: nowrap; // 防止名字换行
+        
+        &:hover {
+            color: $theme-chisato-red;
+        }
     }
 }
 .title {
@@ -83,10 +229,16 @@
     font-size: 18px;
     letter-spacing: 3px;
     font-weight: 500;
+    z-index: 10;
+    // 添加背景，使其在 GIF 背景上更清晰
+    background-color: rgba(255, 255, 255, 0.85);
+    padding: 0 2vmin;
+    border-radius: 8px;
+    backdrop-filter: blur(5px);
     &::before, &::after {
         position: absolute; content: "";
         width: 65%; height: 2px;
-        background-color: $theme-index-black;
+        background-color: $theme-chisato-red;
     }
     &::before { left: 0; top: 0; }
     &::after { right: 0; bottom: 0; }
@@ -99,21 +251,90 @@
     line-height: 31px;
     font-size: 16px;
     font-weight: 400;
+    // 添加背景和阴影，使文字在 GIF 背景上更易读
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 3vmin 4vmin;
+    border-radius: 15px;
+    box-shadow: 
+        0 0 20px rgba($theme-chisato-red, 0.2),
+        0 0 10px rgba($theme-chisato-purple, 0.15),
+        0 4px 15px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(8px);
+    z-index: 10;
+    
+    // 小白工坊链接样式
+    .xiaobai-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: $theme-chisato-purple;
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        vertical-align: middle;
+        
+        &:hover {
+            color: $theme-chisato-red;
+            text-decoration: underline;
+            
+            .xiaobai-avatar {
+                transform: scale(1.1);
+                box-shadow: 0 0 15px rgba($theme-chisato-red, 0.4);
+            }
+        }
+        
+        .xiaobai-avatar {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            border: 2px solid rgba($theme-chisato-purple, 0.3);
+            transition: all 0.3s ease;
+            vertical-align: middle;
+            display: inline-block;
+        }
+    }
 }
-.description { margin-top: 7vmin; }
+.description { 
+    margin-top: 3vmin; // 与 avatar 和 author 保持适当间距
+    margin-bottom: 0; // 去掉底部留白，让下一个 section 的 title 控制间距
+}
 .paragraph   { margin-top: 4vmin; }
 .footer {
     padding-top: 10vmin;
     padding-bottom: 5vmin;
+    z-index: 10;
+    
+    .original-project {
+        display: block;
+        margin-top: 2vmin;
+        font-size: 14px;
+        color: rgba($theme-index-black, 0.7);
+        
+        a {
+            color: $theme-chisato-purple;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            
+            &:hover {
+                color: $theme-chisato-red;
+                text-decoration: underline;
+            }
+        }
+    }
 }
 .information {
     position: relative;
     width: $width-profile-content; height: 340px;
     margin: 0 auto;
-    background-color: #fff;
-    box-shadow: 0 0 10px #9f9f9f;
+    background-color: rgba(255, 255, 255, 0.95);
+    box-shadow: 
+        0 0 20px rgba($theme-chisato-red, 0.15),
+        0 0 10px rgba($theme-chisato-purple, 0.1),
+        0 0 10px #9f9f9f;
     border-radius: 15px;
-    margin-top: 5vmin;
+    margin-top: 3vmin; // 减少与 description 之间的留白
+    z-index: 10;
+    backdrop-filter: blur(8px);
     .inner {
         position: absolute;
         width: 100%; height: 80%;
@@ -144,6 +365,17 @@
             margin: 0;
             font-size: 14px;
             &::before { content: "\25C6"; position: relative; left: -10px; }
+            
+            a {
+                color: $theme-chisato-purple;
+                text-decoration: none;
+                transition: color 0.3s ease;
+                
+                &:hover {
+                    color: $theme-chisato-red;
+                    text-decoration: underline;
+                }
+            }
         }
     }
 }
@@ -155,19 +387,30 @@
     justify-content: space-between;
     margin: 0 auto;
     margin-top: 5vmin;
+    z-index: 10;
     a {
         position: relative;
         width: 49%;
         box-sizing: border-box;
         padding: 6px;
         color: #4c4c4c;
-        background-color: #fff;
+        background-color: rgba(255, 255, 255, 0.95);
         margin-bottom: 2vmin;
-        box-shadow: 0 0 6px #9f9f9f;
+        box-shadow: 
+            0 0 15px rgba($theme-chisato-red, 0.1),
+            0 0 8px rgba($theme-chisato-purple, 0.08),
+            0 0 6px #9f9f9f;
         text-align: left;
         text-decoration: none;
         transition: all .4s ease;
-        &:hover { color: #fff; background-color: $theme-profile-green; }
+        backdrop-filter: blur(5px);
+        &:hover { 
+            color: #fff; 
+            background-color: $theme-chisato-red;
+            box-shadow: 
+                0 0 25px rgba($theme-chisato-red, 0.5),
+                0 0 15px rgba($theme-chisato-purple, 0.3);
+        }
         img {
             display: block;
             width: 100%;

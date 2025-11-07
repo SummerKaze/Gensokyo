@@ -7,6 +7,9 @@
         span:nth-child(2) { left: 30vmin; }
         span:nth-child(3) { right: 15vmin; }
     }
+    .index-chisato {
+        display: none; // 已移至 Profile 页面
+    }
     .index-logo {
         width: 80vmin;
         left: calc(50% - 40vmin);

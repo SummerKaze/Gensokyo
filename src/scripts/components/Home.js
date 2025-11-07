@@ -1,6 +1,11 @@
 import React, { useContext } from "react";
 import { Context } from "../store/menu";
 
+/**
+ * 首页组件
+ * 展示锦木千束（Chisato）的 GIF 动画
+ * 主题：Lycoris Recoil - 锦木千束与彼岸花
+ */
 export default function HomePage() {
   const { store, dispatch } = useContext(Context);
 

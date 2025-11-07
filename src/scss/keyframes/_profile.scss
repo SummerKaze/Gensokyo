@@ -1,3 +1,32 @@
 /*
  * Keyframes - profile
  */
+
+/**
+ * Chisato GIF Profile 页面淡入动画
+ * 用于全屏背景的优雅入场效果
+ */
+@keyframes chisato-fade-in-profile {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(1.05);
+        filter: 
+            brightness(0.7)
+            contrast(1.0)
+            drop-shadow(0 0 30px rgba($theme-chisato-red, 0.2))
+            drop-shadow(0 0 15px rgba($theme-chisato-purple, 0.15));
+    }
+    60% {
+        opacity: 0.8;
+        transform: translate(-50%, -50%) scale(1.02);
+    }
+    100% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+        filter: 
+            brightness(0.9)
+            contrast(1.1)
+            drop-shadow(0 0 60px rgba($theme-chisato-red, 0.4))
+            drop-shadow(0 0 30px rgba($theme-chisato-purple, 0.3));
+    }
+}

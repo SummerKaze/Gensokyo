@@ -8,3 +8,92 @@
     80% { transform: scale(1.03); }
     100% { transform: scale(1); }
 }
+
+/**
+ * Chisato GIF 动画关键帧
+ * 用于锦木千束 GIF 的入场和浮动效果
+ * 入场动画：从右侧滑入，带有轻微的缩放和透明度变化
+ */
+@keyframes chisato-slide-in {
+    0% {
+        opacity: 0;
+        transform: translateY(-50%) translateX(30%) scale(0.75);
+        filter: 
+            drop-shadow(0 0 20px rgba($theme-chisato-red, 0.2))
+            drop-shadow(0 0 10px rgba($theme-chisato-purple, 0.1));
+    }
+    40% {
+        opacity: 0.7;
+        transform: translateY(-50%) translateX(22%) scale(0.88);
+    }
+    60% {
+        opacity: 0.95;
+        transform: translateY(-50%) translateX(18%) scale(0.92);
+    }
+    100% {
+        opacity: 0.98;
+        transform: translateY(-50%) translateX(10%) scale(0.9);
+        filter: 
+            drop-shadow(0 0 40px rgba($theme-chisato-red, 0.4))
+            drop-shadow(0 0 20px rgba($theme-chisato-purple, 0.3))
+            drop-shadow(0 0 10px rgba($theme-chisato-red, 0.2));
+    }
+}
+
+/**
+ * Chisato GIF 浮动动画
+ * 创建轻微的上下浮动效果，模拟呼吸感，增强动态感
+ * 结合轻微的缩放变化，使动画更自然
+ */
+@keyframes chisato-float {
+    0%, 100% {
+        transform: translateY(-50%) translateX(10%) translateY(0) scale(0.9);
+    }
+    50% {
+        transform: translateY(-50%) translateX(10%) translateY(-18px) scale(0.915);
+    }
+}
+
+/**
+ * Chisato GIF 移动端入场动画
+ * 适配移动端屏幕，居中显示
+ * 优化移动端的入场效果，使其更流畅
+ */
+@keyframes chisato-slide-in-sp {
+    0% {
+        opacity: 0;
+        transform: translateX(0) translateY(-50%) scale(0.55);
+        filter: 
+            drop-shadow(0 0 15px rgba($theme-chisato-red, 0.2))
+            drop-shadow(0 0 8px rgba($theme-chisato-purple, 0.1));
+    }
+    40% {
+        opacity: 0.7;
+        transform: translateX(0) translateY(-50%) scale(0.63);
+    }
+    60% {
+        opacity: 0.95;
+        transform: translateX(0) translateY(-50%) scale(0.68);
+    }
+    100% {
+        opacity: 0.98;
+        transform: translateX(0) translateY(-50%) scale(0.7);
+        filter: 
+            drop-shadow(0 0 30px rgba($theme-chisato-red, 0.35))
+            drop-shadow(0 0 15px rgba($theme-chisato-purple, 0.25))
+            drop-shadow(0 0 8px rgba($theme-chisato-red, 0.15));
+    }
+}
+
+/**
+ * Chisato GIF 移动端浮动动画
+ * 移动端版本的浮动效果，幅度稍小以适应小屏幕
+ */
+@keyframes chisato-float-sp {
+    0%, 100% {
+        transform: translateX(0) translateY(-50%) translateY(0) scale(0.7);
+    }
+    50% {
+        transform: translateX(0) translateY(-50%) translateY(-12px) scale(0.715);
+    }
+}
