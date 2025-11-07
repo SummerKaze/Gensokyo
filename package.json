@@ -5,7 +5,7 @@
   "author": "Cyris <i@cyris.moe>",
   "homepage": "https://cyris.moe",
   "dependencies": {
-    "node-sass": "^9.0.0",
+    "sass": "^1.77.0",
     "react": "^16.8.2",
     "react-dom": "^16.8.2",
     "react-scripts": "^5.0.1"
