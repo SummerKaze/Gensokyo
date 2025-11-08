@@ -1,4 +1,7 @@
-export default [
+/**
+ * 项目配置列表
+ */
+const product = [
     {
         "id": 1,
         "title": "ClashBox",
@@ -32,3 +35,5 @@ export default [
         "time": "2025.11.8"
     }
 ]
+
+export default product

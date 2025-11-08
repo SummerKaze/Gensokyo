@@ -108,7 +108,10 @@ export default function ProfilePage() {
                         target="_blank" 
                         rel="noopener noreferrer"
                         className="avatar-link"
-                    />
+                        aria-label="访问 SummerKaze 的 GitHub 主页"
+                    >
+                        <span className="sr-only">GitHub</span>
+                    </a>
                 </div>
                 <div className="author">
                     <a 

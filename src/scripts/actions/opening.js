@@ -1,6 +1,11 @@
 import config from '../config/chapters'
 
-export default (chapter_name) => {
+/**
+ * 获取章节信息
+ * @param {string} chapter_name - 章节名称
+ * @returns {Object} 包含章节名称和描述的对象
+ */
+const getChapterInfo = (chapter_name) => {
     const chapter = chapter_name
     const description = config[chapter]
 
@@ -9,3 +14,5 @@ export default (chapter_name) => {
         description: description
     }
 }
+
+export default getChapterInfo
