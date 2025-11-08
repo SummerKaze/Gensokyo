@@ -4,21 +4,20 @@ import { Context } from "../store/menu"
 
 export default function ProfilePage() {
     const { store } = useContext(Context)
-    const [gifLoaded, setGifLoaded] = useState(false)
-    const [shouldLoadGif, setShouldLoadGif] = useState(false)
-    const gifRef = useRef(null)
-    const workerRef = useRef(null)
+    const [videoLoaded, setVideoLoaded] = useState(false)
+    const [shouldLoadVideo, setShouldLoadVideo] = useState(false)
+    const videoRef = useRef(null)
 
-    // 使用 Web Worker 和 Intersection Observer 优化 GIF 加载
+    // 使用 Intersection Observer 优化视频加载
     useEffect(() => {
         // 使用 Intersection Observer 检测元素是否进入视口
         const observer = new IntersectionObserver(
             (entries) => {
                 entries.forEach((entry) => {
-                    if (entry.isIntersecting && !shouldLoadGif) {
+                    if (entry.isIntersecting && !shouldLoadVideo) {
                         // 延迟加载，避免阻塞主线程
                         setTimeout(() => {
-                            setShouldLoadGif(true)
+                            setShouldLoadVideo(true)
                         }, 500)
                         observer.disconnect()
                     }
@@ -39,66 +38,35 @@ export default function ProfilePage() {
 
         return () => {
             observer.disconnect()
-            if (workerRef.current) {
-                workerRef.current.terminate()
-            }
         }
-    }, [shouldLoadGif])
+    }, [shouldLoadVideo])
 
-    // GIF 加载完成后的处理 - 优化循环过渡
+    // 视频加载完成后的处理
     useEffect(() => {
-        if (gifRef.current && gifLoaded) {
-            const gif = gifRef.current
+        if (videoRef.current && shouldLoadVideo) {
+            const video = videoRef.current
             
-            // 使用更温和的方法：在循环时添加轻微的透明度变化
-            // 通过定期添加轻微的淡入淡出效果来减少循环跳转的视觉冲击
-            let animationFrame = null
-            let lastTime = Date.now()
-            
-            // 保存原始的 filter 样式
-            const originalFilter = window.getComputedStyle(gif).filter || ''
-            
-            const smoothLoopTransition = () => {
-                if (!gifRef.current) return
-                
-                const now = Date.now()
-                const elapsed = now - lastTime
-                
-                // 每 2.8 秒（接近 GIF 循环时长）添加一次平滑过渡
-                // 这个时间需要根据实际 GIF 时长调整（30 帧 GIF 通常是 2-3 秒）
-                if (elapsed >= 2800) {
-                    // 添加轻微的透明度变化，减少跳转感
-                    gif.style.transition = 'opacity 0.25s ease'
-                    gif.style.opacity = '0.92'
-                    
-                    setTimeout(() => {
-                        if (gifRef.current) {
-                            gifRef.current.style.opacity = '1'
-                        }
-                    }, 250)
-                    
-                    lastTime = now
-                }
-                
-                animationFrame = requestAnimationFrame(smoothLoopTransition)
+            // 视频加载完成后显示
+            const handleCanPlay = () => {
+                setVideoLoaded(true)
+                video.play().catch(err => {
+                    console.warn('视频自动播放失败:', err)
+                })
             }
             
-            // 延迟启动，避免影响初始加载
-            setTimeout(() => {
-                smoothLoopTransition()
-            }, 3000)
+            video.addEventListener('canplay', handleCanPlay)
             
             return () => {
-                if (animationFrame) {
-                    cancelAnimationFrame(animationFrame)
-                }
+                video.removeEventListener('canplay', handleCanPlay)
             }
         }
-    }, [gifLoaded])
+    }, [shouldLoadVideo])
 
     const project = project_json.map(el =>
         <a href={el.link} key={el.id} target="_blank" rel="noopener noreferrer">
-            <img src={el.thumb} alt={el.title} />
+            <div className="project-thumb">
+                <img src={el.thumb} alt={el.title} />
+            </div>
             <h4>{el.title}</h4>
             <p>{el.intro}</p>
             <time>{el.time}</time>
@@ -114,24 +82,23 @@ export default function ProfilePage() {
 
             {/* description-box */}
             <section className="description-box">
-                {/* Chisato GIF 全屏背景 - 展示锦木千束与彼岸花 */}
+                {/* Chisato 视频全屏背景 - 展示锦木千束与彼岸花 */}
                 <div className="profile-chisato-bg">
                     <div className="chisato-overlay" />
-                    {shouldLoadGif && (
-                        <img 
-                            ref={gifRef}
-                            src="/images/Chisato_2k_30.gif" 
-                            alt="锦木千束（Chisato）手持彼岸花 - Lycoris Recoil" 
+                    {shouldLoadVideo && (
+                        <video 
+                            ref={videoRef}
+                            src="/images/Chisato_2k.mp4" 
                             className="chisato-gif"
-                            loading="lazy"
-                            decoding="async"
-                            onLoad={() => {
-                                setGifLoaded(true)
+                            autoPlay
+                            loop
+                            muted
+                            playsInline
+                            preload="auto"
+                            onError={(e) => {
+                                console.warn('视频加载失败')
                             }}
-                            onError={() => {
-                                console.warn('GIF 加载失败')
-                            }}
-                            style={{ opacity: gifLoaded ? 1 : 0 }}
+                            style={{ opacity: videoLoaded ? 1 : 0 }}
                         />
                     )}
                 </div>

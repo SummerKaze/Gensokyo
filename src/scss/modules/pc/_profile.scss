@@ -38,8 +38,9 @@
 #profile-page[data-state="close"], #profile-page[data-state="init"] { display: none; }
 
 /**
- * Chisato GIF 全屏背景
+ * Chisato 视频全屏背景
  * 在 About Me 部分展示锦木千束与彼岸花
+ * 使用 MP4 格式优化性能，避免 GIF 文件过大导致的卡顿
  * 使用主题色遮罩增强视觉效果
  */
 .description-box {
@@ -121,14 +122,12 @@
             // 延迟加载时的淡入动画
             transition: opacity 0.8s ease;
             animation: chisato-fade-in-profile 1.5s ease 0.3s forwards;
-            // 优化 GIF 渲染质量
-            image-rendering: auto;
-            // 使用 CSS 滤镜平滑 GIF 循环跳转
-            // 注意：GIF 本身的循环问题最好通过重新制作 GIF 或使用视频格式解决
+            // 优化视频渲染质量
+            // 视频格式自动循环，无需额外处理
         }
     }
     
-    // 确保内容显示在 GIF 上方
+    // 确保内容显示在视频上方
     .avatar,
     .author,
     .description {
@@ -242,6 +241,7 @@
     }
     &::before { left: 0; top: 0; }
     &::after { right: 0; bottom: 0; }
+    overflow: hidden;
 }
 .description, .paragraph {
     position: relative;
@@ -392,7 +392,7 @@
         position: relative;
         width: 49%;
         box-sizing: border-box;
-        padding: 6px;
+        padding: 16px;
         color: #4c4c4c;
         background-color: rgba(255, 255, 255, 0.95);
         margin-bottom: 2vmin;
@@ -404,6 +404,7 @@
         text-decoration: none;
         transition: all .4s ease;
         backdrop-filter: blur(5px);
+        border-radius: 16px;
         &:hover { 
             color: #fff; 
             background-color: $theme-chisato-red;
@@ -411,9 +412,16 @@
                 0 0 25px rgba($theme-chisato-red, 0.5),
                 0 0 15px rgba($theme-chisato-purple, 0.3);
         }
-        img {
-            display: block;
-            width: 100%;
+        .project-thumb {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 200px;
+            
+            img {
+                width: 200px;
+                display: block;
+            }
         }
         h4 { height: 20px; }
         p {

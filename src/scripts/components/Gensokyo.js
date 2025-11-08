@@ -11,8 +11,7 @@ export default function Gensokyo() {
 
     if (store.chapter.name === "Prologue") {
         // Console
-        console.log("> 『 绿生的幻想乡 』")
-        console.log(">  Cyris's design portfolio v2.")
+        console.log("> 『 なつの幻想郷 』")
     }
 
     switch (store.chapter.name) {

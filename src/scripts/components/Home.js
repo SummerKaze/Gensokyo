@@ -16,7 +16,31 @@ export default function HomePage() {
         <span />
         <span />
       </div>
-      <div className="index-logo" />
+      <div className="index-logo">
+        <div className="logo-main">
+          <div className="logo-chars-row">
+            <span className="logo-char logo-char-first">な</span>
+            <span className="logo-char logo-char-with-sub">
+              つ
+              <span className="logo-sub-text logo-sub-below">Summer</span>
+            </span>
+            <span className="logo-char">の</span>
+            <span className="logo-char-group-wrapper">
+              <span className="logo-sub-text logo-sub-above">Gensōkyō</span>
+              <span className="logo-char-group">
+                <span className="logo-char logo-char-misaligned-1">幻</span>
+                <span className="logo-char logo-char-misaligned-2">想</span>
+                <span className="logo-char logo-char-misaligned-3">郷</span>
+              </span>
+            </span>
+          </div>
+        </div>
+        <div className="logo-line">
+          <span className="logo-asterisk">✱</span>
+          <div className="logo-line-thick"></div>
+          <div className="logo-line-thin"></div>
+        </div>
+      </div>
       <div
         id="index-button"
         data-state={store.dataState}
@@ -40,27 +64,27 @@ export default function HomePage() {
       <div className="index-sns">
         <div className="inner">
           <a
-            href="https://github.com/iCyris"
+            href="https://github.com/SummerKaze"
             title="GitHub"
             rel="noopener noreferrer"
           >
             <i className="czs-github-logo" />
           </a>
-          <a href="https://magia.cyris.moe/" title="Magia" rel="noopener noreferrer">
+          <a href="https://github.com/xiaobaigroup" title="xiaobaigroup" rel="noopener noreferrer">
             <i className="czs-pokemon-ball" />
           </a>
-          <a href="https://kiwi-fruit.cyris.moe/" title="KiwiFruit" rel="noopener noreferrer">
+          <a href="https://github.com/XHXYT/AnimeZ" title="AnimeZ" rel="noopener noreferrer">
             <i className="czs-chemistry" />
           </a>
           <a
-            href="https://www.apple.com/"
-            title="Apple"
+            href="https://developer.huawei.com/consumer/cn/personalcenter/myCommunity/communityPublish/post?uid=e092bbab8c7c4f5f91154451868d4495"
+            title="HuaWei"
             rel="noopener noreferrer"
           >
-            <i className="czs-apple" />
+            <i className="huawei-icon" />
           </a>
           <a
-            href="https://store.steampowered.com/"
+            href="https://steamcommunity.com/id/SummerKaze/"
             title="Steam"
             rel="noopener noreferrer"
           >

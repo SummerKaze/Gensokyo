@@ -47,14 +47,180 @@
 }
 .index-logo {
     position: absolute;
-    width: 80vmin; height: 24vmin;
-    left: calc(50% - 40vmin); top: calc(50% - 12vmin);
-    background-image: url("/images/index/logo.svg");
-    background-size: 80vmin;
-    background-repeat: no-repeat;
-    background-position: center;
+    width: 80vmin; 
+    height: auto;
+    min-height: 24vmin;
+    left: calc(50% - 40vmin); 
+    top: calc(50% - 12vmin);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     transform: scale(0);
     z-index: 10;
+    
+    // 主文字容器
+    .logo-main {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        
+        // 主文字行
+        .logo-chars-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            margin-bottom: 2vmin;
+        }
+        
+        // 单个字符样式
+        .logo-char {
+            display: inline-block;
+            font-family: "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Yu Mincho", "YuMincho", "MS PMincho", serif;
+            font-weight: bold;
+            font-size: 8vmin;
+            color: #333333;
+            line-height: 1;
+            margin: 0 0.3vmin;
+            
+            // 第一个字符特殊样式：白色字符在深色方块内
+            &.logo-char-first {
+                position: relative;
+                width: 8.5vmin;
+                height: 8.5vmin;
+                border-radius: 0.8vmin;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                background-color: #333333;
+                color: #ffffff;
+                box-shadow: 0 0 8px rgba(255, 255, 255, 0.8), 
+                            0 0 12px rgba(255, 255, 255, 0.6),
+                            0 2px 4px rgba(255, 255, 255, 0.4);
+            }
+            
+            // 带副标题的字符（つ）
+            &.logo-char-with-sub {
+                display: inline-flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: flex-start;
+                position: relative;
+            }
+        }
+        
+        // 副标题文字样式
+        .logo-sub-text {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+            color: #666666;
+            font-weight: 400;
+            letter-spacing: 0.05em;
+            text-shadow: none;
+            white-space: nowrap;
+            
+            // 位于字符下方的副标题（Summer）
+            &.logo-sub-below {
+                font-size: 2.2vmin;
+                margin-top: 0.8vmin;
+            }
+            
+            // 位于字符组上方的副标题（Gensōkyō）
+            &.logo-sub-above {
+                font-size: 2.2vmin;
+                position: absolute;
+                top: -3vmin;
+                left: 50%;
+                transform: translateX(-50%);
+                width: auto;
+                text-align: center;
+            }
+        }
+        
+        // 字符组包装器（用于定位 Gensōkyō）
+        .logo-char-group-wrapper {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        // 字符组（幻想郷）- 保持水平排列和错位效果
+        .logo-char-group {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            
+            // 内部字符水平排列，错位效果
+            .logo-char {
+                display: inline-block;
+                margin: 0 0.3vmin;
+                vertical-align: baseline;
+                
+                // 错位排列效果 - 让三个字有不同的垂直位置
+                &.logo-char-misaligned-1 {
+                    transform: translateY(-0.3vmin);
+                }
+                
+                &.logo-char-misaligned-2 {
+                    transform: translateY(0.2vmin);
+                }
+                
+                &.logo-char-misaligned-3 {
+                    transform: translateY(-0.1vmin);
+                }
+            }
+        }
+    }
+    
+    // 横线和星号容器
+    .logo-line {
+        position: relative;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        margin-top: 1vmin;
+        
+        // 星号
+        .logo-asterisk {
+            display: inline-block;
+            font-size: 3vmin;
+            color: #333333;
+            text-shadow: 0 0 8px rgba(255, 255, 255, 0.8), 
+                         0 0 12px rgba(255, 255, 255, 0.6),
+                         0 2px 4px rgba(255, 255, 255, 0.4);
+            margin-right: 1vmin;
+            line-height: 1;
+        }
+        
+        // 粗横线
+        .logo-line-thick {
+            position: absolute;
+            left: 4vmin;
+            width: calc(100% - 4vmin);
+            height: 0.5vmin;
+            background-color: #333333;
+            box-shadow: 0 0 8px rgba(255, 255, 255, 0.8), 
+                        0 0 12px rgba(255, 255, 255, 0.6),
+                        0 2px 4px rgba(255, 255, 255, 0.4);
+        }
+        
+        // 细横线
+        .logo-line-thin {
+            position: absolute;
+            left: 4vmin;
+            top: 0.7vmin;
+            width: calc(100% - 4vmin);
+            height: 0.15vmin;
+            background-color: #333333;
+            box-shadow: 0 0 8px rgba(255, 255, 255, 0.8), 
+                        0 0 12px rgba(255, 255, 255, 0.6),
+                        0 2px 4px rgba(255, 255, 255, 0.4);
+        }
+    }
 }
 #index-button {
     position: absolute;
@@ -152,6 +318,22 @@
         // 社交链接 hover 效果使用 Chisato 主题色
         &:hover { background-color: $theme-chisato-purple; }
         transition: background-color .4s ease;
+        
+        // 华为图标特殊样式
+        .huawei-icon {
+            &::before {
+                content: '';
+                display: inline-block;
+                width: 28px !important;
+                height: 28px !important;
+                margin-bottom: 8px;
+                background-image: url("/images/index/huawei.svg");
+                background-size: contain;
+                background-repeat: no-repeat;
+                background-position: center;
+                vertical-align: middle;
+            }
+        }
     }
 }
 

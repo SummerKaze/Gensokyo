@@ -13,7 +13,65 @@
     .index-logo {
         width: 80vmin;
         left: calc(50% - 40vmin);
-        background-size: 80vmin;
+        
+        .logo-main {
+            .logo-chars-row {
+                margin-bottom: 1.5vmin;
+            }
+            
+            .logo-char {
+                font-size: 7vmin;
+                margin: 0 0.2vmin;
+                
+                &.logo-char-first {
+                    width: 7.5vmin;
+                    height: 7.5vmin;
+                }
+            }
+            
+            .logo-sub-text {
+                &.logo-sub-below {
+                    font-size: 2.4vmin;
+                    margin-top: 0.6vmin;
+                }
+                
+                &.logo-sub-above {
+                    font-size: 2.4vmin;
+                    top: -2.5vmin;
+                }
+            }
+            
+            .logo-char-group {
+                .logo-char {
+                    &.logo-char-misaligned-1 {
+                        transform: translateY(-0.25vmin);
+                    }
+                    
+                    &.logo-char-misaligned-2 {
+                        transform: translateY(0.15vmin);
+                    }
+                    
+                    &.logo-char-misaligned-3 {
+                        transform: translateY(-0.08vmin);
+                    }
+                }
+            }
+        }
+        
+        .logo-line {
+            .logo-asterisk {
+                font-size: 2.5vmin;
+            }
+            
+            .logo-line-thick {
+                height: 0.4vmin;
+            }
+            
+            .logo-line-thin {
+                top: 0.6vmin;
+                height: 0.12vmin;
+            }
+        }
     }
     .index-sns {
         bottom: 12vmin;
@@ -27,6 +85,21 @@
                 width: 45px; height: 45px;
                 font-size: 26px;
                 line-height: 48px;
+                
+                // 华为图标特殊样式
+                .huawei-icon {
+                    &::before {
+                        content: '';
+                        display: inline-block;
+                        width: 26px;
+                        height: 26px;
+                        background-image: url("/images/index/huawei.svg");
+                        background-size: contain;
+                        background-repeat: no-repeat;
+                        background-position: center;
+                        vertical-align: middle;
+                    }
+                }
             }
         }
     }
