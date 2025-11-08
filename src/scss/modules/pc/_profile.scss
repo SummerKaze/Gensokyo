@@ -37,8 +37,8 @@
     will-change: scroll-position;
     transform: translateZ(0); // 启用 GPU 加速
     -webkit-transform: translateZ(0);
-    // 使用 contain 属性优化渲染性能
-    contain: layout style paint;
+    // 移除 contain 以保持全屏背景正常显示，只保留 paint 优化
+    contain: paint;
 }
 #profile-page[data-state="open"] { display: block; }
 #profile-page[data-state="close"], #profile-page[data-state="init"] { display: none; }
@@ -69,8 +69,8 @@
         will-change: transform;
         transform: translateZ(0);
         -webkit-transform: translateZ(0);
-        // 使用 contain 优化渲染
-        contain: layout style paint;
+        // 移除 contain 以保持全屏背景正常显示
+        // contain: layout style paint;
         
         .chisato-overlay {
             position: absolute;
@@ -160,7 +160,8 @@
     position: relative;
     width: 100%; height: 12.5vmin;
     margin: 0 auto;
-    background-image: url("/images/profile/title.svg");
+    // 背景图片已在 React 组件中通过内联样式设置，避免路径问题
+    // background-image: url("/images/profile/title.svg");
     background-size: 52vmin;
     background-position: center;
     background-repeat: no-repeat;

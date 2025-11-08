@@ -6,7 +6,7 @@ const product = [
         "id": 1,
         "title": "ClashBox",
         "intro": "ClashBox是首个基于Navigation框架的HarmonyOS NEXT平台的代理软件，使用改版的Mihomo(ClashMeta)内核。",
-        "thumb": `${process.env.PUBLIC_URL}/images/project/icon-clashbox.png`,
+        "thumb": `${process.env.PUBLIC_URL}/images/project/icon-ClashBox.png`,
         "link": "https://github.com/xiaobaigroup/ClashBox",
         "time": "2024.1.1"
     },
