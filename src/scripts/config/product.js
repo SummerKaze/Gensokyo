@@ -6,7 +6,7 @@ const product = [
         "id": 1,
         "title": "ClashBox",
         "intro": "ClashBox是首个基于Navigation框架的HarmonyOS NEXT平台的代理软件，使用改版的Mihomo(ClashMeta)内核。",
-        "thumb": "/images/project/icon-clashbox.png",
+        "thumb": `${process.env.PUBLIC_URL}/images/project/icon-clashbox.png`,
         "link": "https://github.com/xiaobaigroup/ClashBox",
         "time": "2024.1.1"
     },
@@ -22,7 +22,7 @@ const product = [
         "id": 3,
         "title": "HMOS-AppBundleNameForShared",
         "intro": "专为 HarmonyOS 应用，从华为应用商城分享链接中提取应用包名而设计。",
-        "thumb": "/images/project/icon-HMOS-AppBundleNameForShared.png",
+        "thumb": `${process.env.PUBLIC_URL}/images/project/icon-HMOS-AppBundleNameForShared.png`,
         "link": "https://github.com/SummerKaze/HMOS-AppBundleNameForShared",
         "time": "2024.5.20"
     },
@@ -30,7 +30,7 @@ const product = [
         "id": 4,
         "title": "AnimeZ",
         "intro": "OpenHarmony开源看动漫应用。__数据均来源于网络，仅供学习交流!__",
-        "thumb": "/images/project/icon-AnimeZ.png",
+        "thumb": `${process.env.PUBLIC_URL}/images/project/icon-AnimeZ.png`,
         "link": "https://github.com/XHXYT/AnimeZ",
         "time": "2025.11.8"
     }

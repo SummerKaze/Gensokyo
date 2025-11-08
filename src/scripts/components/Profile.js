@@ -7,6 +7,32 @@ export default function ProfilePage() {
     const [videoLoaded, setVideoLoaded] = useState(false)
     const [shouldLoadVideo, setShouldLoadVideo] = useState(false)
     const videoRef = useRef(null)
+    const profilePageRef = useRef(null)
+
+    // 优化滚动性能：使用 passive event listeners
+    useEffect(() => {
+        const profilePage = profilePageRef.current
+        if (!profilePage) return
+
+        // 使用 requestAnimationFrame 优化滚动处理
+        let ticking = false
+        const handleScroll = () => {
+            if (!ticking) {
+                window.requestAnimationFrame(() => {
+                    // 滚动时的处理逻辑（如果需要）
+                    ticking = false
+                })
+                ticking = true
+            }
+        }
+
+        // 使用 passive listener 提升滚动性能
+        profilePage.addEventListener('scroll', handleScroll, { passive: true })
+        
+        return () => {
+            profilePage.removeEventListener('scroll', handleScroll)
+        }
+    }, [])
 
     // 使用 Intersection Observer 优化视频加载
     useEffect(() => {
@@ -74,10 +100,15 @@ export default function ProfilePage() {
     )
 
     return (
-        <div id="profile-page" data-state={ store.dataState }>
+        <div id="profile-page" ref={profilePageRef} data-state={ store.dataState }>
             {/* header-box */}
             <section className="header-box">
-                <div className="header" />
+                <div 
+                    className="header" 
+                    style={{
+                        backgroundImage: `url(${process.env.PUBLIC_URL}/images/profile/title.svg)`
+                    }}
+                />
             </section>
 
             {/* description-box */}
@@ -88,7 +119,7 @@ export default function ProfilePage() {
                     {shouldLoadVideo && (
                         <video 
                             ref={videoRef}
-                            src="/images/Chisato_2k.mp4" 
+                            src={`${process.env.PUBLIC_URL}/images/Chisato_2k.mp4`}
                             className="chisato-gif"
                             autoPlay
                             loop
