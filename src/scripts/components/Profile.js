@@ -101,19 +101,7 @@ export default function ProfilePage() {
 
     return (
         <div id="profile-page" ref={profilePageRef} data-state={ store.dataState }>
-            {/* header-box */}
-            <section className="header-box">
-                <div 
-                    className="header" 
-                    style={{
-                        backgroundImage: `url(${process.env.PUBLIC_URL}/images/profile/title.svg)`
-                    }}
-                />
-            </section>
-
-            {/* description-box */}
-            <section className="description-box">
-                {/* Chisato 视频全屏背景 - 展示锦木千束与彼岸花 */}
+             {/* Chisato 视频全屏背景 - 展示锦木千束与彼岸花 */}
                 <div className="profile-chisato-bg">
                     <div className="chisato-overlay" />
                     {shouldLoadVideo && (
@@ -126,6 +114,7 @@ export default function ProfilePage() {
                             muted
                             playsInline
                             preload="auto"
+                            poster={`${process.env.PUBLIC_URL}/images/profile/background.svg`}
                             onError={(e) => {
                                 console.warn('视频加载失败')
                             }}
@@ -133,6 +122,18 @@ export default function ProfilePage() {
                         />
                     )}
                 </div>
+            {/* header-box */}
+            <section className="header-box">
+                <div 
+                    className="header" 
+                    style={{
+                        backgroundImage: `url(${process.env.PUBLIC_URL}/images/profile/title.svg)`
+                    }}
+                />
+            </section>
+
+            {/* description-box */}
+            <section className="description-box">
                 <div className="avatar">
                     <a 
                         href="https://github.com/SummerKaze" 

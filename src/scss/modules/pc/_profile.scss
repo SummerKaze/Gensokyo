@@ -34,11 +34,12 @@
     opacity: 0;
     z-index: 300;
     // 优化滚动性能
-    will-change: scroll-position;
-    transform: translateZ(0); // 启用 GPU 加速
-    -webkit-transform: translateZ(0);
-    // 移除 contain 以保持全屏背景正常显示，只保留 paint 优化
-    contain: paint;
+    // will-change: scroll-position; // 移除，避免影响 fixed 定位
+    // 移除 transform 以允许 fixed 定位相对于视口
+    // transform: translateZ(0); 
+    // -webkit-transform: translateZ(0);
+    // 移除 contain 以保持全屏背景正常显示
+    // contain: paint;
 }
 #profile-page[data-state="open"] { display: block; }
 #profile-page[data-state="close"], #profile-page[data-state="init"] { display: none; }
@@ -49,6 +50,77 @@
  * 使用 MP4 格式优化性能，避免 GIF 文件过大导致的卡顿
  * 使用主题色遮罩增强视觉效果
  */
+.profile-chisato-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    overflow: hidden;
+    will-change: transform;
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+
+    .chisato-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 2;
+        will-change: opacity;
+        transform: translateZ(0);
+        -webkit-transform: translateZ(0);
+        background: 
+            linear-gradient(
+                to bottom,
+                rgba(255, 255, 255, 0.08) 0%,
+                transparent 15%
+            ),
+            linear-gradient(
+                to top,
+                rgba($theme-chisato-red, 0.2) 0%,
+                rgba($theme-chisato-purple, 0.15) 30%,
+                transparent 60%
+            ),
+            radial-gradient(
+                ellipse at center,
+                rgba($theme-chisato-cream, 0.4) 0%,
+                rgba($theme-chisato-purple, 0.3) 40%,
+                rgba($theme-chisato-red, 0.4) 100%
+            );
+        backdrop-filter: blur(12px) saturate(140%);
+        -webkit-backdrop-filter: blur(12px) saturate(140%);
+        will-change: backdrop-filter;
+        box-shadow: 
+            inset 0 1px 0 rgba(255, 255, 255, 0.15),
+            inset 0 -1px 0 rgba(0, 0, 0, 0.08);
+    }
+    
+    .chisato-gif {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) translateZ(0);
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        filter: 
+            brightness(0.9)
+            contrast(1.1)
+            drop-shadow(0 0 60px rgba($theme-chisato-red, 0.4))
+            drop-shadow(0 0 30px rgba($theme-chisato-purple, 0.3));
+        z-index: 1;
+        opacity: 0;
+        will-change: opacity, transform;
+        transition: opacity 0.8s ease;
+        animation: chisato-fade-in-profile 1.5s ease 0.3s forwards;
+    }
+}
 .description-box {
     position: relative;
     height: auto; // 根据内容动态调整高度
@@ -57,96 +129,6 @@
     // 确保子元素居中
     text-align: center;
     
-    .profile-chisato-bg {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        z-index: -1;
-        overflow: hidden;
-        // 优化 fixed 定位性能
-        will-change: transform;
-        transform: translateZ(0);
-        -webkit-transform: translateZ(0);
-        // 移除 contain 以保持全屏背景正常显示
-        // contain: layout style paint;
-        
-        .chisato-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 2;
-            // 优化 overlay 性能
-            will-change: opacity;
-            transform: translateZ(0);
-            -webkit-transform: translateZ(0);
-            // 苹果 Glass 玻璃效果
-            // 使用多层渐变和模糊效果创造深度感
-            background: 
-                // 顶部高光
-                linear-gradient(
-                    to bottom,
-                    rgba(255, 255, 255, 0.08) 0%,
-                    transparent 15%
-                ),
-                // 底部阴影
-                linear-gradient(
-                    to top,
-                    rgba($theme-chisato-red, 0.2) 0%,
-                    rgba($theme-chisato-purple, 0.15) 30%,
-                    transparent 60%
-                ),
-                // 中心渐变 - 40% 半透明
-                radial-gradient(
-                    ellipse at center,
-                    rgba($theme-chisato-cream, 0.4) 0%,
-                    rgba($theme-chisato-purple, 0.3) 40%,
-                    rgba($theme-chisato-red, 0.4) 100%
-                );
-            // Glass 效果的关键：backdrop-filter - 降低模糊度以提升性能
-            // 减少模糊半径以提升滚动性能
-            backdrop-filter: blur(12px) saturate(140%);
-            -webkit-backdrop-filter: blur(12px) saturate(140%);
-            // 优化 backdrop-filter 性能
-            will-change: backdrop-filter;
-            transform: translateZ(0);
-            -webkit-transform: translateZ(0);
-            // 添加微妙的边框高光
-            box-shadow: 
-                inset 0 1px 0 rgba(255, 255, 255, 0.15),
-                inset 0 -1px 0 rgba(0, 0, 0, 0.08);
-        }
-        
-        .chisato-gif {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            // 使用 GPU 加速，合并 transform 属性
-            transform: translate(-50%, -50%) translateZ(0);
-            width: 100vw;
-            height: 100vh;
-            object-fit: cover;
-            object-position: center;
-            // 使用主题色创建氛围光效
-            filter: 
-                brightness(0.9)
-                contrast(1.1)
-                drop-shadow(0 0 60px rgba($theme-chisato-red, 0.4))
-                drop-shadow(0 0 30px rgba($theme-chisato-purple, 0.3));
-            z-index: 1;
-            opacity: 0;
-            // 优化性能：使用 will-change 加速渲染
-            will-change: opacity, transform;
-            // 延迟加载时的淡入动画
-            transition: opacity 0.8s ease;
-            animation: chisato-fade-in-profile 1.5s ease 0.3s forwards;
-            // 优化视频渲染质量
-            // 视频格式自动循环，无需额外处理
-        }
-    }
     
     // 确保内容显示在视频上方
     .avatar,
